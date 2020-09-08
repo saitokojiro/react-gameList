@@ -1,44 +1,13 @@
 import React from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import logo, { ReactComponent } from "./logo.svg";
 import gameArticle from "./data/article.json";
 import "./App.css";
 
-let gameItems = [
-  { index: 1, title: "one" },
-  { index: 2, title: "two" },
-  { index: 3, title: "three" },
-  { index: 4, title: "for" },
-];
-
-let gemeItemsEmpty = [];
-/*
-function YourAlert() {
-  gameItems.sort(function (a, b) {
-    return a.title > b.title;
-  });
-  console.log(gameItems);
-  return gameItems;
+function Game() {
+  return <h2>Home</h2>;
 }
 
-function Yourapp(props) {
-  let gameItems = props.gameItem;
-  let yalert = new YourAlert();
-
-  let Glist = gameItems.map((gli) => (
-    <li className={gli.id} key={gli.id}>
-      "{gli.name} " and {}
-      <a href={gli.name}>voir</a>
-    </li>
-  ));
-
-  return (
-    <div>
-      <ul>{Glist}</ul>
-      <button onClick={YourAlert}>sort</button>
-    </div>
-  );
-}
-*/
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -54,7 +23,7 @@ class App extends React.Component {
     let newGameList = gameList.reverse();
     console.log(gameList);
     this.setState({
-      gameList: newGameList.sort((a, b) => a.date < b.date),
+      gameList: newGameList.sort((a, b) => a.date.years > b.date.years),
     });
   };
 
@@ -64,48 +33,123 @@ class App extends React.Component {
     let newGameList = gameList.reverse();
     console.log(gameList);
     this.setState({
-      gameList: newGameList.sort((a, b) => a.date > b.date),
+      gameList: newGameList.sort((a, b) => a.date.years < b.date.years),
+    });
+  };
+
+  sortGameAlphabetically = (e) => {
+    const { gameList } = this.state;
+
+    let newGameList = gameList.reverse();
+    console.log(gameList);
+    this.setState({
+      gameList: newGameList.sort((a, b) => a.name > b.name),
+    });
+  };
+
+  sortGameLowPrice = (e) => {
+    const { gameList } = this.state;
+
+    let newGameList = gameList.reverse();
+    console.log(gameList);
+    this.setState({
+      gameList: newGameList.sort((a, b) => a.price > b.price),
+    });
+  };
+
+  sortGameHighPrice = (e) => {
+    const { gameList } = this.state;
+
+    let newGameList = gameList.reverse();
+    console.log(gameList);
+    this.setState({
+      gameList: newGameList.sort((a, b) => a.price < b.price),
     });
   };
 
   viewGameList = () => {
     const { gameList } = this.state;
-    let viewGame = gameList.map((gli) => (
+
+    let viewGame = gameList.map((gli, index) => (
       <div
-        className="card col-sm-5 m-2"
+        className="card col-sm-4 m-5"
         style={{ width: 10 + "rem" }}
         key={gli.id}
       >
-        <img src={gli.img} className="img-thumbnail" alt="..." />
+        <img
+          src={gli.img}
+          className="img-thumbnail"
+          alt="..."
+          style={{ width: 80 + "%", margin: "auto" }}
+        />
+
         <div className="card-body">
           <h5 className="card-title">{gli.name}</h5>
-          <p className="card-text">
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </p>
+          <p className="card-text">{gli.description}</p>
         </div>
         <ul className="list-group list-group-flush">
-          <li className="list-group-item">{gli.date}</li>
-          <li className="list-group-item">Dapibus ac facilisis in</li>
-          <li className="list-group-item">Vestibulum at eros</li>
+          <li className="list-group-item">
+            {gli.date.day + " - " + gli.date.months + " - " + gli.date.years}
+          </li>
+          <li className="list-group-item">{gli.plateform}</li>
+          <li className="list-group-item" key={index}>
+            {gli.price}
+          </li>
         </ul>
         <div className="card-body">
-          <a href={gli.id} className="card-link">
-            Card link
-          </a>
+          <Router>
+            <Link to={"/game/" + index}>comment</Link>
+
+            <Switch>
+              <Route path={"/game/" + index}>
+                <Game />
+              </Route>
+            </Switch>
+          </Router>
         </div>
       </div>
     ));
-    return <div className="row center">{viewGame}</div>;
+    return <div className="row">{viewGame}</div>;
   };
 
   render() {
     return (
       <div className="App container">
-        <span>hello</span>
         <br />
-        <button onClick={this.sortGameToOldDate}>sort new to old</button>
-        <button onClick={this.sortGameToNewDate}>sort old to new</button>
+        <div>
+          <button
+            className="btn btn-secondary btn-lg mr-2 ml-2"
+            onClick={this.sortGameToNewDate}
+          >
+            sort by new date
+          </button>
+          <button
+            className="btn btn-secondary btn-lg mr-2 ml-2"
+            onClick={this.sortGameToOldDate}
+          >
+            sort by old date
+          </button>
+
+          <button
+            className="btn btn-secondary btn-lg mr-2 ml-2"
+            onClick={this.sortGameAlphabetically}
+          >
+            sort by Alphabetically
+          </button>
+          <button
+            className="btn btn-secondary btn-lg mr-2 ml-2"
+            onClick={this.sortGameLowPrice}
+          >
+            sort by low price
+          </button>
+          <button
+            className="btn btn-secondary btn-lg mr-2 ml-2"
+            onClick={this.sortGameHighPrice}
+          >
+            sort by high price
+          </button>
+        </div>
+
         <br />
         <this.viewGameList />
       </div>
