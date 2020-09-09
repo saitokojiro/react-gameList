@@ -9,11 +9,6 @@ import {
 import gameArticle from "./data/article.json";
 import "./App.css";
 
-function Child() {
-  let { id } = useParams();
-  return console.log(id);
-}
-
 export class GameList extends React.Component {
   constructor(props) {
     super(props);
@@ -30,7 +25,12 @@ export class GameList extends React.Component {
     let newGameList = gameList.reverse();
     console.log(gameList);
     this.setState({
-      gameList: newGameList.sort((a, b) => a.date.years > b.date.years),
+      //gameList: newGameList.sort((a, b) => a.date.years > b.date.years),
+      gameList: newGameList.sort((a, b) => {
+        let dateA = new Date(a.date.years);
+        let dateB = new Date(b.date.years);
+        return dateA - dateB;
+      }),
     });
   };
 
@@ -40,7 +40,12 @@ export class GameList extends React.Component {
     let newGameList = gameList.reverse();
     console.log(gameList);
     this.setState({
-      gameList: newGameList.sort((a, b) => a.date.years < b.date.years),
+      //gameList: newGameList.sort((a, b) => a.date.years < b.date.years),
+      gameList: newGameList.sort((a, b) => {
+        let dateB = new Date(a.date.years);
+        let dateA = new Date(b.date.years);
+        return dateA - dateB;
+      }),
     });
   };
 
@@ -50,7 +55,12 @@ export class GameList extends React.Component {
     let newGameList = gameList.reverse();
     console.log(gameList);
     this.setState({
-      gameList: newGameList.sort((a, b) => a.name > b.name),
+      gameList: newGameList.sort((a, b) => {
+        let GameA = a.name.toLowerCase(),
+          GameB = b.name.toLowerCase();
+        if (GameA < GameB) return -1;
+        //if (GameA > GameB) return 1;
+      }),
     });
   };
 
@@ -60,7 +70,7 @@ export class GameList extends React.Component {
     let newGameList = gameList.reverse();
     console.log(gameList);
     this.setState({
-      gameList: newGameList.sort((a, b) => a.price > b.price),
+      gameList: newGameList.sort((a, b) => a.price - b.price),
     });
   };
 
@@ -70,51 +80,9 @@ export class GameList extends React.Component {
     let newGameList = gameList.reverse();
     console.log(gameList);
     this.setState({
-      gameList: newGameList.sort((a, b) => a.price < b.price),
+      gameList: newGameList.sort((a, b) => b.price - a.price),
     });
   };
-
-  viewGameSelect = (props) => {
-    const { gameId } = this.state;
-    //console.log(gameId);
-    for (let i = 0; i < gameId.length; i++) {
-      console.log(gameId[i].id);
-      console.log(gameId[i].name);
-      if (gameId[i].id === props.id) {
-        return (
-          <div
-            className="card mx-auto"
-            style={{ width: 50 + "rem" }}
-            key={gameId[i].id}
-          >
-            <img
-              src={gameId[i].img}
-              className="img-thumbnail"
-              alt="..."
-              style={{ width: 80 + "%", margin: "auto" }}
-            />
-
-            <div className="card-body">
-              <h5 className="card-title">{gameId[i].name}</h5>
-              <p className="card-text">{gameId[i].description}</p>
-            </div>
-            <ul className="list-group list-group-flush">
-              <li className="list-group-item">
-                {gameId[i].date.day +
-                  " - " +
-                  gameId[i].date.months +
-                  " - " +
-                  gameId[i].date.years}
-              </li>
-              <li className="list-group-item">{gameId[i].plateform}</li>
-              <li className="list-group-item">{gameId[i].price}</li>
-            </ul>
-          </div>
-        );
-      }
-    }
-  };
-
   viewGameList = () => {
     const { gameList } = this.state;
     console.log(gameList);
@@ -142,10 +110,11 @@ export class GameList extends React.Component {
           <li className="list-group-item">{gli.plateform}</li>
           <li className="list-group-item" key={index}>
             {gli.price}
+            {gli.devise}
           </li>
         </ul>
         <div className="card-body">
-          <Link to={"/game/" + gli.id}>comment</Link>
+          <Link to={`/game/${gli.id}`}>voir plus</Link>
         </div>
       </div>
     ));
@@ -156,19 +125,23 @@ export class GameList extends React.Component {
     return (
       <div className="App container">
         <br />
-        <this.viewGameSelect id={0}></this.viewGameSelect>
+        <Link to="/">
+          <button className="btn btn-secondary btn-lg mr-2 ml-2">Home</button>
+        </Link>
+        <br />
+        <br />
         <div className="mr-5">
           <button
             className="btn btn-secondary btn-lg mr-2 ml-2"
             onClick={this.sortGameToNewDate}
           >
-            sort by new date
+            sort by new years
           </button>
           <button
             className="btn btn-secondary btn-lg mr-2 ml-2"
             onClick={this.sortGameToOldDate}
           >
-            sort by old date
+            sort by old years
           </button>
 
           <button
@@ -191,6 +164,7 @@ export class GameList extends React.Component {
           </button>
         </div>
         <this.viewGameList></this.viewGameList>
+
         <br />
       </div>
     );

@@ -1,56 +1,85 @@
-[
-  {
+[{
     "id": 1,
     "img": "../img/Black-Desert.jpg",
     "name": "Black Desert",
     "description": "Black Desert Online is a sandbox, living-world MMORPG.",
-    "date": { "day": "03", "months": "03", "years": "2016" },
+    "date": {
+      "day": 3,
+      "months": 3,
+      "years": 2016
+    },
     "plateform": "PC/Console",
-    "price": "10€"
+    "price": 10,
+    "devise": "€"
   },
   {
     "id": 2,
     "img": "../img/cyberpunk-2077.jpg",
     "name": "Cyberpunk 2077",
     "description": "Cyberpunk 2077 for PC is a first-person shooter game, but one with a difference",
-    "date": { "day": "19", "months": "11", "years": "2020" },
+    "date": {
+      "day": 19,
+      "months": 11,
+      "years": 2020
+    },
     "plateform": "PC/Console",
-    "price": "69€"
+    "price": 69,
+    "devise": "€"
   },
   {
     "id": 3,
     "img": "../img/star-citizen.jpg",
     "name": "Star Citizen",
     "description": "Star Citizen combines features from space simulator, first person shooter, and massively multiplayer online genres across its four playable modes",
-    "date": { "day": "10", "months": "10", "years": "2012" },
+    "date": {
+      "day": 10,
+      "months": 10,
+      "years": 2012
+    },
     "plateform": "PC",
-    "price": "50€"
+    "price": 50,
+    "devise": "€"
   },
   {
     "id": 4,
     "img": "../img/watch-dog-legion.jpg",
     "name": "Watch dog legion",
     "description": "Watch Dogs Legion for PC is an action adventure game set in a fictionalised alternate reality London",
-    "date": { "day": "29", "months": "10", "years": "2020" },
+    "date": {
+      "day": 29,
+      "months": 10,
+      "years": 2020
+    },
     "plateform": "PC/Console",
-    "price": "69€"
+    "price": 69,
+    "devise": "€"
   },
   {
     "id": 5,
     "img": "../img/Slayer-Online.png",
     "name": "Slayer Online",
     "description": "Slayers Online is a two-dimensional massively multiplayer amateur online role-playing game developed by Frostfall.",
-    "date": { "day": "29", "months": "12", "years": "2002" },
+    "date": {
+      "day": 29,
+      "months": 12,
+      "years": 2002
+    },
     "plateform": "PC",
-    "price": "(free)"
+    "price": 0,
+    "devise": "(Free)"
   },
   {
     "id": 6,
     "img": "../img/world-of-warcraft-classic.jpg",
     "name": "World of Warcraft",
     "description": "World of Warcraft (WoW) is a massively multiplayer online role-playing game (MMORPG) released in 2004 by Blizzard Entertainment. It is the fourth released game set in the Warcraft fantasy universe.",
-    "date": { "day": "23", "months": "11", "years": "2004" },
+    "date": {
+      "day": 23,
+      "months": 11,
+      "years": 2004
+    },
     "plateform": "PC",
-    "price": "40€ (subscription)"
+    "price": 40,
+    "devise": "€ (subscription)"
   }
 ]
