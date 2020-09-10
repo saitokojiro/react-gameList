@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import GameList from "./GameViewList";
-import Homes from "./home";
+import GameList from "./gamelist/GameViewList";
+import Homes from "./Home";
 import GameSelected from "./gamelist/GameViewSelected";
 
 import logo, { ReactComponent } from "./logo.svg";

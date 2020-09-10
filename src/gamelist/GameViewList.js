@@ -6,8 +6,10 @@ import {
   Link,
   useParams,
 } from "react-router-dom";
-import gameArticle from "./data/article.json";
-import "./App.css";
+import gameArticle from "../data/article.json";
+import GameViewAll from "./GameViewAll";
+import ButtonSort from "./ButtonSort";
+import "./../App.css";
 
 export class GameList extends React.Component {
   constructor(props) {
@@ -83,6 +85,16 @@ export class GameList extends React.Component {
       gameList: newGameList.sort((a, b) => b.price - a.price),
     });
   };
+
+  sortReset = (e) => {
+    const { gameList } = this.state;
+
+    let newGameList = gameList.reverse();
+    console.log(gameList);
+    this.setState({
+      gameList: newGameList.sort((a, b) => a.id - b.id),
+    });
+  };
   viewGameList = () => {
     const { gameList } = this.state;
     console.log(gameList);
@@ -125,44 +137,23 @@ export class GameList extends React.Component {
     return (
       <div className="App container">
         <br />
-        <Link to="/">
-          <button className="btn btn-secondary btn-lg mr-2 ml-2">Home</button>
-        </Link>
-        <br />
-        <br />
-        <div className="mr-5">
-          <button
-            className="btn btn-secondary btn-lg mr-2 ml-2"
-            onClick={this.sortGameToNewDate}
-          >
-            sort by new years
-          </button>
-          <button
-            className="btn btn-secondary btn-lg mr-2 ml-2"
-            onClick={this.sortGameToOldDate}
-          >
-            sort by old years
-          </button>
 
-          <button
-            className="btn btn-secondary btn-lg mr-2 ml-2"
-            onClick={this.sortGameAlphabetically}
-          >
-            sort by Alphabetically
-          </button>
-          <button
-            className="btn btn-secondary btn-lg mr-2 ml-2"
-            onClick={this.sortGameLowPrice}
-          >
-            sort by low price
-          </button>
-          <button
-            className="btn btn-secondary btn-lg mr-2 ml-2"
-            onClick={this.sortGameHighPrice}
-          >
-            sort by high price
-          </button>
+        <div className="mr-5">
+          <Link to="/">
+            <button className="btn btn-secondary btn-lg mr-2 ml-2">Home</button>
+          </Link>
         </div>
+
+        <br />
+        <br />
+        <ButtonSort
+          sortReset={this.sortReset}
+          sortGameToNewDate={this.sortGameToNewDate}
+          sortGameToOldDate={this.sortGameToOldDate}
+          sortGameAlphabetically={this.sortGameAlphabetically}
+          sortGameLowPrice={this.sortGameLowPrice}
+          sortGameHighPrice={this.sortGameHighPrice}
+        ></ButtonSort>
         <this.viewGameList></this.viewGameList>
 
         <br />
