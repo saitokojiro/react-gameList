@@ -7,19 +7,28 @@ import {
   useParams,
 } from "react-router-dom";
 import gameArticle from "../data/article.json";
-import GameViewAll from "./GameViewAll";
+//import GameViewAll from "./GameViewAll";
 import ButtonSort from "./ButtonSort";
 import "./../App.css";
+import axios from "axios";
 
 export class GameList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      gameList: gameArticle,
+      gameList: [],
       gameId: gameArticle,
       isOldestFirst: true,
     };
   }
+
+  componentDidMount = () => {
+    axios.get(`https://127.0.0.1:8000/games/api`).then((res) => {
+      const persons = res.data;
+      console.log(persons);
+      this.setState({ gameList: persons });
+    });
+  };
 
   sortGameToOldDate = (e) => {
     const { gameList } = this.state;
@@ -29,8 +38,8 @@ export class GameList extends React.Component {
     this.setState({
       //gameList: newGameList.sort((a, b) => a.date.years > b.date.years),
       gameList: newGameList.sort((a, b) => {
-        let dateA = new Date(a.date.years);
-        let dateB = new Date(b.date.years);
+        let dateA = new Date(a.date);
+        let dateB = new Date(b.date);
         return dateA - dateB;
       }),
     });
@@ -44,8 +53,8 @@ export class GameList extends React.Component {
     this.setState({
       //gameList: newGameList.sort((a, b) => a.date.years < b.date.years),
       gameList: newGameList.sort((a, b) => {
-        let dateB = new Date(a.date.years);
-        let dateA = new Date(b.date.years);
+        let dateB = new Date(a.date);
+        let dateA = new Date(b.date);
         return dateA - dateB;
       }),
     });
@@ -116,12 +125,10 @@ export class GameList extends React.Component {
           <p className="card-text">{gli.description}</p>
         </div>
         <ul className="list-group list-group-flush">
-          <li className="list-group-item">
-            {gli.date.day + " - " + gli.date.months + " - " + gli.date.years}
-          </li>
-          <li className="list-group-item">{gli.plateform}</li>
+          <li className="list-group-item">{gli.date}</li>
+          <li className="list-group-item">{gli.platform}</li>
           <li className="list-group-item" key={index}>
-            {gli.price}
+            {gli.price + " "}
             {gli.devise}
           </li>
         </ul>

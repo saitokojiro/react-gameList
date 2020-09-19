@@ -2,13 +2,16 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import gameArticle from "./../data/article.json";
 import "./../index.css";
+import axios from "axios";
 
 class GameViewSelected extends React.Component {
   userData;
   constructor(props) {
     super(props);
     this.state = {
-      gameId: gameArticle,
+      //gameId: gameArticle,
+      gameId: [],
+
       idParams: this.props.match.params.id,
 
       idPage: this.props.match.params.id,
@@ -18,48 +21,69 @@ class GameViewSelected extends React.Component {
     };
   }
 
+  componentDidMount = () => {
+    axios
+      .get(`https://127.0.0.1:8000/game/${this.props.match.params.id}/api`)
+      .then((res) => {
+        const persons = res.data;
+        console.log(persons);
+        console.log("ok");
+        this.setState({ gameId: res.data });
+      });
+  };
+
   viewGameSelect = () => {
     const { gameId } = this.state;
-    //console.log(gameId);
-    for (let i = 0; i < gameId.length; i++) {
-      console.log(gameId[i].id === parseInt(this.state.idParams));
 
-      console.log(this.state.idParams + 1);
+    console.log(this.state.gameId.name);
+    //for (let i = 0; i < gameId.length; i++) {
+    //console.log(gameId.id === parseInt(this.state.idParams));
 
-      if (gameId[i].id === parseInt(this.state.idParams)) {
-        console.log("ok");
-        return (
-          <div
-            className="card mx-auto"
-            style={{ width: 50 + "rem" }}
-            key={gameId[i].id}
-          >
-            <img
-              src={gameId[i].img}
-              className="img-thumbnail"
-              alt="..."
-              style={{ width: 80 + "%", margin: "auto" }}
-            />
+    console.log(this.state.idParams + 1);
 
-            <div className="card-body">
-              <h5 className="card-title">{gameId[i].name}</h5>
-              <p className="card-text">{gameId[i].description}</p>
-            </div>
-            <ul className="list-group list-group-flush">
-              <li className="list-group-item">
-                {gameId[i].date.day +
-                  " - " +
-                  gameId[i].date.months +
-                  " - " +
-                  gameId[i].date.years}
-              </li>
-              <li className="list-group-item">{gameId[i].plateform}</li>
-              <li className="list-group-item">{gameId[i].price}</li>
-            </ul>
-          </div>
-        );
-      }
-    }
+    //if (gameId.id === parseInt(this.state.idParams)) {
+
+    /*
+    
+    <li className="list-group-item">
+            {gameId.date.day +
+              " - " +
+              gameId.date.months +
+              " - " +
+              gameId.date.years}
+          </li>
+
+    */
+    console.log("ok");
+    return (
+      <div
+        className="card mx-auto"
+        style={{ width: 50 + "rem" }}
+        key={gameId.id}
+      >
+        <img
+          src={gameId.img}
+          className="img-thumbnail"
+          alt="..."
+          style={{ width: 80 + "%", margin: "auto" }}
+        />
+
+        <div className="card-body">
+          <h5 className="card-title">{gameId.name}</h5>
+          <p className="card-text">{gameId.description}</p>
+        </div>
+        <ul className="list-group list-group-flush">
+          <li className="list-group-item">{gameId.date}</li>
+          <li className="list-group-item">{gameId.platform}</li>
+          <li className="list-group-item">
+            {gameId.price + " "}
+            {gameId.devise}
+          </li>
+        </ul>
+      </div>
+    );
+    //}
+    //}
   };
 
   viewMessage = () => {
@@ -70,19 +94,19 @@ class GameViewSelected extends React.Component {
 
     if (getuser !== null) {
       let messageList = getuser.map((msglist) => (
-        <div class="mx-auto">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">
+        <div className="mx-auto">
+          <div className="card">
+            <div className="card-body">
+              <h5 className="card-title">
                 User : <br />
                 {msglist.userM}
               </h5>
-              <p class="card-text">
+              <p className="card-text">
                 message : <br />
                 {msglist.messageU}
               </p>
-              <p class="card-text">
-                <small class="text-muted">
+              <p className="card-text">
+                <small className="text-muted">
                   ID page : {msglist.idPage} and Id Message: {msglist.idMessage}
                 </small>
               </p>
@@ -155,7 +179,7 @@ class GameViewSelected extends React.Component {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <div class="form-group row">
+          <div className="form-group row">
             <label htmlFor="UserName" className="col-sm-2">
               UserName
             </label>
@@ -171,7 +195,7 @@ class GameViewSelected extends React.Component {
               />
             </div>
           </div>
-          <div class="form-group row">
+          <div className="form-group row">
             <label htmlFor="messageU" className="col-sm-2">
               your message
             </label>
@@ -194,7 +218,9 @@ class GameViewSelected extends React.Component {
   };
 
   render() {
-    //console.log(this.match);
+    //console.log(this.match)<this.viewGameSelect></this.viewGameSelect>;
+    //console.log(this.state.gameIds);
+    this.viewGameSelect();
     return (
       <div className="App container">
         <div className=" ml-5">
@@ -204,7 +230,6 @@ class GameViewSelected extends React.Component {
           </Link>
           <br />
           <br />
-
           <this.viewGameSelect></this.viewGameSelect>
           <br />
           <br />

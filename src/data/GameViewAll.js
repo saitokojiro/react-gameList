@@ -1,5 +1,5 @@
-import React from "react";
-import gameArticle from "./../data/article.json";
+/*import React from "react";
+import gameArticle from "../data/article.json";
 import {
   BrowserRouter as Router,
   Switch,
@@ -47,7 +47,7 @@ class GameViewAll extends React.Component {
           </li>
         </ul>
         <div className="card-body">
-          <Link to={`/game/${gli.id}`}>voir plus</Link>
+          <Link to={`/game/${gli.id}`}>voirdsqdsq plus</Link>
         </div>
       </div>
     ));
@@ -63,3 +63,4 @@ class GameViewAll extends React.Component {
   }
 }
 export default GameViewAll;
+*/
