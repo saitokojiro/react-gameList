@@ -10,7 +10,7 @@ class GameViewSelected extends React.Component {
     super(props);
     this.state = {
       //gameId: gameArticle,
-      gameId: [],
+      gameId: { Comment: [{ id: null }] },
 
       idParams: this.props.match.params.id,
 
@@ -26,9 +26,11 @@ class GameViewSelected extends React.Component {
       .get(`https://127.0.0.1:8000/game/${this.props.match.params.id}/api`)
       .then((res) => {
         const persons = res.data;
-        console.log(persons);
+        //console.log(persons.Comment);
         console.log("ok");
-        this.setState({ gameId: res.data });
+        this.setState({
+          gameId: res.data,
+        });
       });
   };
 
@@ -87,35 +89,43 @@ class GameViewSelected extends React.Component {
   };
 
   viewMessage = () => {
+    // console.log(this.state.gameId.Comment);
+
+    const { gameId } = this.state;
+
+    /*
     console.log(`${localStorage.key(0)}: ${localStorage.getItem(5)}`);
     let getuser = JSON.parse(
       localStorage.getItem(`user/${this.state.idParams}`)
-    );
-
-    if (getuser !== null) {
-      let messageList = getuser.map((msglist) => (
-        <div className="mx-auto">
-          <div className="card">
-            <div className="card-body">
-              <h5 className="card-title">
-                User : <br />
-                {msglist.userM}
-              </h5>
-              <p className="card-text">
-                message : <br />
-                {msglist.messageU}
-              </p>
-              <p className="card-text">
-                <small className="text-muted">
-                  ID page : {msglist.idPage} and Id Message: {msglist.idMessage}
-                </small>
-              </p>
-            </div>
+    );*/
+    //let Objs = Object.values(CommentId);
+    console.log(gameId.Comment);
+    //debugger;
+    if (gameId !== null) {
+      /*//let messageList = gameId.map((msglist) => (
+      <div className="mx-auto">
+        <div className="card">
+          <div className="card-body">
+            <h5 className="card-title">
+              User : <br />
+              {msglist.userM}
+            </h5>
+            <p className="card-text">
+              message : <br />
+              {msglist.messageU}
+            </p>
+            <p className="card-text">
+              <small className="text-muted">
+                ID page : {msglist.idPage} and Id Message: {msglist.idMessage}
+              </small>
+            </p>
           </div>
         </div>
-      ));
-
-      return <div className="">{messageList}</div>;
+      </div>;
+      // ));
+*/
+      //return <div className="">{messageList}</div>;
+      return <div className="">ok</div>;
     } else {
       return <div className=""></div>;
     }
