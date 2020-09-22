@@ -10,7 +10,7 @@ class GameViewSelected extends React.Component {
     super(props);
     this.state = {
       //gameId: gameArticle,
-      gameId: { Comment: [{ id: null }] },
+      gameId: { Comment: [{ id: null, username: null, Comment: null }] },
 
       idParams: this.props.match.params.id,
 
@@ -99,41 +99,36 @@ class GameViewSelected extends React.Component {
       localStorage.getItem(`user/${this.state.idParams}`)
     );*/
     //let Objs = Object.values(CommentId);
-    console.log(gameId.Comment);
+    //console.log(gameId.Comment[0].username);
     //debugger;
-    if (gameId !== null) {
-      /*//let messageList = gameId.map((msglist) => (
-      <div className="mx-auto">
-        <div className="card">
-          <div className="card-body">
-            <h5 className="card-title">
-              User : <br />
-              {msglist.userM}
-            </h5>
-            <p className="card-text">
-              message : <br />
-              {msglist.messageU}
-            </p>
-            <p className="card-text">
-              <small className="text-muted">
-                ID page : {msglist.idPage} and Id Message: {msglist.idMessage}
-              </small>
-            </p>
+    if (gameId.Comment !== null) {
+      let messageList = gameId.Comment.map((msglist) => (
+        <div className="mx-auto" key={msglist.id}>
+          <div className="card">
+            <div className="card-body">
+              <h5 className="card-title">Username : {msglist.username}</h5>
+              <p className="card-text">
+                message : <br />
+                {msglist.Comment}
+              </p>
+              <p className="card-text">
+                <small className="text-muted">
+                  ID page : {this.state.idParams} and Id Message: {msglist.id}
+                </small>
+              </p>
+            </div>
           </div>
         </div>
-      </div>;
-      // ));
-*/
-      //return <div className="">{messageList}</div>;
-      return <div className="">ok</div>;
+      ));
+
+      return <div className="">{messageList}</div>;
+      //return <div className="">ok</div>;
     } else {
       return <div className=""></div>;
     }
 
     // }
   };
-
-  componentDidMount() {}
 
   handleSubmit = (event) => {
     let messageObject = [];
@@ -164,6 +159,26 @@ class GameViewSelected extends React.Component {
         messageU: this.state.messageU,
       });
       let messageJson = JSON.stringify(messageObject);
+
+      //Axios
+
+      const commentPost = {
+        username: this.state.userM,
+        comment: this.state.messageU,
+      };
+
+      axios
+        .post(
+          `https://127.0.0.1:8000/game/${this.props.match.params.id}/comment/api`,
+          commentPost
+        )
+        .then((res) => {
+          console.log("ok");
+          console.log(res.date);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
 
       localStorage.setItem(`user/${this.state.idParams}`, messageJson);
     }
