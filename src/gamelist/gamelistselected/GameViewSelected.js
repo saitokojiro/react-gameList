@@ -96,7 +96,7 @@ class GameViewSelected extends React.Component {
 
   handleSubmit = (event) => {
     //Axios
-    /*
+
     const commentPost = {
       username: this.state.userM,
       comment: this.state.messageU,
@@ -105,11 +105,11 @@ class GameViewSelected extends React.Component {
     const headers = {
       Accept: "application/json",
       "Access-Control-Allow-Headers": "Content-Type",
-      "Access-Control-Allow-Origin": "https://127.0.0.1:8000",
+      /*"Access-Control-Allow-Origin": "https://127.0.0.1:8000",*/
     };
-    delete axios.defaults.headers.common["Content-Length"];
+    /* delete axios.defaults.headers.common["Content-Length"];
     axios.defaults.headers.post["Content-Type"] =
-      "application/x-www-form-urlencoded";
+      "application/x-www-form-urlencoded";*/
     axios
       .post(
         `https://127.0.0.1:8000/game/${this.props.match.params.id}/comment/api`,
@@ -123,7 +123,8 @@ class GameViewSelected extends React.Component {
       .catch((error) => {
         console.log(error);
       });
-*/
+
+    /*
     (async () => {
       const rawResponse = await fetch(
         `https://127.0.0.1:8000/game/${this.props.match.params.id}/comment/api`,
@@ -143,7 +144,7 @@ class GameViewSelected extends React.Component {
 
       console.log(content);
     })();
-
+*/
     /*
     this.setState({
       idMessage: "",
@@ -151,7 +152,7 @@ class GameViewSelected extends React.Component {
       messageU: "",
     });
 */
-    //event.preventDefault();
+    event.preventDefault();
   };
 
   handleChange = (event) => {

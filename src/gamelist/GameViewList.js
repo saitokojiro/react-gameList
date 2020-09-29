@@ -152,14 +152,14 @@ export class GameList extends React.Component {
             <button className="btn btn-secondary btn-lg mr-2 ml-2">Home</button>
           </Link>
           <Disconnect></Disconnect>
+          <Link to="/addgame">
+            <button className="btn btn-secondary btn-lg mr-2 ml-2">
+              Add new game
+            </button>
+          </Link>
         </div>
 
         <br />
-        <Link to="/addgame">
-          <button className="btn btn-secondary btn-lg mr-2 ml-2">
-            Game List
-          </button>
-        </Link>
         <br />
         <ButtonSort
           sortReset={this.sortReset}
