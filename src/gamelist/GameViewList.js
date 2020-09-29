@@ -11,6 +11,7 @@ import gameArticle from "../data/article.json";
 import ButtonSort from "./ButtonSort";
 import "./../App.css";
 import axios from "axios";
+import AddGame from "./AddGame";
 
 export class GameList extends React.Component {
   constructor(props) {
@@ -152,6 +153,11 @@ export class GameList extends React.Component {
         </div>
 
         <br />
+        <Link to="/addgame">
+          <button className="btn btn-secondary btn-lg mr-2 ml-2">
+            Game List
+          </button>
+        </Link>
         <br />
         <ButtonSort
           sortReset={this.sortReset}
