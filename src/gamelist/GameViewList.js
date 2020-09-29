@@ -12,6 +12,7 @@ import ButtonSort from "./ButtonSort";
 import "./../App.css";
 import axios from "axios";
 import AddGame from "./AddGame";
+import Disconnect from "../auth/Disconnect";
 
 export class GameList extends React.Component {
   constructor(props) {
@@ -150,6 +151,7 @@ export class GameList extends React.Component {
           <Link to="/">
             <button className="btn btn-secondary btn-lg mr-2 ml-2">Home</button>
           </Link>
+          <Disconnect></Disconnect>
         </div>
 
         <br />

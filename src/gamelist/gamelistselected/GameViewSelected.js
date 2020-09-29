@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Link } from "react-router-dom";
-import gameArticle from "./../data/article.json";
-import "./../index.css";
+import gameArticle from "./../../data/article.json";
+import "./../../index.css";
 import axios from "axios";
+import Disconnect from "../../auth/Disconnect";
 
 class GameViewSelected extends React.Component {
   userData;
@@ -36,27 +37,6 @@ class GameViewSelected extends React.Component {
 
   viewGameSelect = () => {
     const { gameId } = this.state;
-
-    console.log(this.state.gameId.name);
-    //for (let i = 0; i < gameId.length; i++) {
-    //console.log(gameId.id === parseInt(this.state.idParams));
-
-    console.log(this.state.idParams + 1);
-
-    //if (gameId.id === parseInt(this.state.idParams)) {
-
-    /*
-    
-    <li className="list-group-item">
-            {gameId.date.day +
-              " - " +
-              gameId.date.months +
-              " - " +
-              gameId.date.years}
-          </li>
-
-    */
-    console.log("ok");
     return (
       <div
         className="card mx-auto"
@@ -84,23 +64,10 @@ class GameViewSelected extends React.Component {
         </ul>
       </div>
     );
-    //}
-    //}
   };
 
   viewMessage = () => {
-    // console.log(this.state.gameId.Comment);
-
     const { gameId } = this.state;
-
-    /*
-    console.log(`${localStorage.key(0)}: ${localStorage.getItem(5)}`);
-    let getuser = JSON.parse(
-      localStorage.getItem(`user/${this.state.idParams}`)
-    );*/
-    //let Objs = Object.values(CommentId);
-    //console.log(gameId.Comment[0].username);
-    //debugger;
     if (gameId.Comment !== null) {
       let messageList = gameId.Comment.map((msglist) => (
         <div className="mx-auto" key={msglist.id}>
@@ -122,74 +89,69 @@ class GameViewSelected extends React.Component {
       ));
 
       return <div className="">{messageList}</div>;
-      //return <div className="">ok</div>;
     } else {
       return <div className=""></div>;
     }
-
-    // }
   };
 
   handleSubmit = (event) => {
-    let messageObject = [];
+    //Axios
+    /*
+    const commentPost = {
+      username: this.state.userM,
+      comment: this.state.messageU,
+    };
 
-    console.log(this.state.idParams);
-    let getuser = JSON.parse(
-      localStorage.getItem(`user/${this.state.idParams}`)
-    );
-    if (getuser === null) {
-      messageObject.push({
-        idPage: parseInt(this.state.idParams),
-        idMessage: 1,
-        userM: this.state.userM,
-        messageU: this.state.messageU,
+    const headers = {
+      Accept: "application/json",
+      "Access-Control-Allow-Headers": "Content-Type",
+      "Access-Control-Allow-Origin": "https://127.0.0.1:8000",
+    };
+    delete axios.defaults.headers.common["Content-Length"];
+    axios.defaults.headers.post["Content-Type"] =
+      "application/x-www-form-urlencoded";
+    axios
+      .post(
+        `https://127.0.0.1:8000/game/${this.props.match.params.id}/comment/api`,
+        { username: this.state.userM, comment: this.state.messageU },
+        { headers: headers }
+      )
+      .then((res) => {
+        console.log("ok");
+        console.log(res.date);
+      })
+      .catch((error) => {
+        console.log(error);
       });
+*/
+    (async () => {
+      const rawResponse = await fetch(
+        `https://127.0.0.1:8000/game/${this.props.match.params.id}/comment/api`,
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: this.state.userM,
+            comment: this.state.messageU,
+          }),
+        }
+      );
+      const content = await rawResponse.json();
 
-      let messageJson = JSON.stringify(messageObject);
+      console.log(content);
+    })();
 
-      localStorage.setItem(`user/${this.state.idParams}`, messageJson);
-    } else {
-      //storage + Array
-
-      for (let i = 0; i < getuser.length; i++) messageObject.push(getuser[i]);
-      messageObject.push({
-        idPage: parseInt(this.state.idParams),
-        idMessage: getuser.length + 1,
-        userM: this.state.userM,
-        messageU: this.state.messageU,
-      });
-      let messageJson = JSON.stringify(messageObject);
-
-      //Axios
-
-      const commentPost = {
-        username: this.state.userM,
-        comment: this.state.messageU,
-      };
-
-      axios
-        .post(
-          `https://127.0.0.1:8000/game/${this.props.match.params.id}/comment/api`,
-          commentPost
-        )
-        .then((res) => {
-          console.log("ok");
-          console.log(res.date);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-
-      localStorage.setItem(`user/${this.state.idParams}`, messageJson);
-    }
-
+    /*
     this.setState({
       idMessage: "",
       userM: "",
       messageU: "",
     });
-
-    event.preventDefault();
+*/
+    //event.preventDefault();
   };
 
   handleChange = (event) => {
@@ -243,8 +205,6 @@ class GameViewSelected extends React.Component {
   };
 
   render() {
-    //console.log(this.match)<this.viewGameSelect></this.viewGameSelect>;
-    //console.log(this.state.gameIds);
     this.viewGameSelect();
     return (
       <div className="App container">
@@ -253,6 +213,7 @@ class GameViewSelected extends React.Component {
           <Link to="/Game">
             <button className="btn btn-secondary btn-lg mr-2 ml-2">Back</button>
           </Link>
+          <Disconnect></Disconnect>
           <br />
           <br />
           <this.viewGameSelect></this.viewGameSelect>
